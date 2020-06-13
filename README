@@ -1,2 +1,5 @@
 implemented a game-tree with multi-way trees, represented with the left-child right-sibling tree structure.
 also, i implemented the minimax algorithm with alpha-beta pruning + a paranoic strategio.
+# make with make cmd
+make
+make run
