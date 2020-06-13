@@ -1,0 +1,77 @@
+	Pentru rezolvarea temei am ales implementarea arborelui multi-way cu
+un arbore left-child right-sibling.
+
+					@@@@@@@ TASK1 @@@@@@@
+	
+	Pentru rezolvarea primului task, am creat initial o functie care sa-mi
+citeasca inputul caracter cu caracter, in timp ce stocam in matricea primului
+nod, a radacinii. Mai departe, am analizat matricea initiala, verificand
+toate posibilitatile mutarii, determinate de caracterele de '-' din matrice.
+Am numarat astfel, numarul de noduri necesare pentru a acoperi toate posibilele
+variatii de mutari ale pozitiei actuale de joc. Apoi am creat toti copiii fiecarui nod
+parinte, dar copiind in fiecare nod copil matricea parintelui, ca apoi, dupa ce
+ma intorceam recursiv la pozitia fratelui unui copil, sa am configuratia parinte
+lui salvata. In timpul creatiei recursive, am numarat de fiecare data pozitia
+actuala prin intermediul unui counter pe care il incrementam si determinam
+astfel si caracterul ce trebuie introdus (R / B). Inainte de adaugarea tuturor
+copiilor pe fiecare nivel, verific daca pozitia actuala a parintelui nu este una
+terminala: de win sau una in care nu mai exista mutari posibile. Astfel, crearea
+arborelui se baza pe faptul ca primul copil este intotdeauna prima mutare posibila
+din cadrul pozitiei actuale a parintelui, iar fratii lui sunt variatii ale
+acestei mutari - alte pozitii cu caracterul curent de R sau B mutat mai la stanga,
+sus, jos sau dreapta fata de cel anterior. Am creat astfel arborele "in adancime",
+intai generarea mutarilor pana la stadiul terminal, apoi generarea variatiei de
+pe fiecare nivel.
+
+					@@@@@@@ TASK2 @@@@@@@
+	
+	La rezolvarea task-ului doi, am adaugat o structura de coada, necesara pentru
+crearea arborelui din fisierul de intrare. Am implementat structura de coada cu
+ajutorul listelor inlantuite. Am citit fisierul de intrare caracter cu caracter,
+si mi-am creat o functie prin care transformam caracterul sau stringul de carac-
+tere in numar. Astfel, in functia de citire, am parcurs iterativ fiecare caracter
+si la fiecare intalnire a unei cifre, stocam numarul intreg si la final, analizam
+caracterul, care poate fi ')' sau ']'. In functie de acest ultim caracter, mi-am
+facut functiile de creare de noduri in arbore: in cazul in care aveam caracterul
+')', numarul stocat imi dadea numarul de noduri ce urmau a fi create, iar ']'
+doar valoare frunzei. Astfel, la fiecare creare de noduri, dadeam push pe coada
+la adresa fiecaruia, fiind la randul sau un viitor parinte care va avea copii,
+iar pointerul la nod cu care iteram, lua de fiecare data adresa inceputului cozii.
+La finalul crearii copiilor, dadeam pop de pe coada, iar pointerul temp se muta
+la urmatorul elemente de pe coada.
+Atunci cand intalneam, insa, un caracter ']', opream push-ul pe coada si doar
+actualizam valoarea de la frunza respectiva.
+	Pentru implementarea minimax, mi-am creat doua functii de evaluare a valorii
+bazate pe comparatia fiecarei valori al fiecarui copil, pe fiecare nivel.
+Valoarea respectivaare ca factor decizional si pozitia la care ma aflu,
+(min sau max, determinata de un counter incremental) o transmit corespunzator
+la parintele sau. Astfel, parcurg initial pana la finalul arborelui, pana la
+nivelul frunza, dupa care dupa aceasta evaluare, ma intorc recursiv la fiecare
+parinte, actualizand valorile corecte.
+
+					@@@@@@@@ TASK3 @@@@@@@
+
+	Pentru rezolvarea acestui task, am adaugat o structura noua de date, o stiva,
+reprezentata tot printr-o lista. M-am folosit tot de o coada pentru a citi datele
+din fisier, iar stiva am folosit-o pentru parcurgerea necesara, in adancime, pentru
+a parcurge fiecare copil, pe rand, intorcandu-ma apoi la parinte, pentru a actua-
+liza valorile de alpha si beta, care duc la pruning-ul celorlalte ramuri. Am
+initializat valorile initiate de alpha si beta cu -infinit, respectiv infinit
+si apoi parcurg fiecare copil, apoi actualizez valoarea parintelui in functie de
+pozitie, cu maximul/minimul dintre alpha/beta si valoarea nodului frunza, in caz
+ca nodul copil nu mai are alti copii. In caz ca nodul copil nu este un nod frunza
+valoarea lui alpha/beta a nodului curent va depinde in functie de valoarea de 
+alpha/beta curenta si de valoarea de alpha si beta a nodului copil 
+(minimul / maximul dintre cele trei).
+
+
+					@@@@@@@@ BONUS @@@@@@@
+
+	In vederea rezolvarii task-ului bonus, am adoptat aceeasi tehnica ca la
+task-ul minimax. Diferenta e ca am stocat string-urile in interiorul nodurilor,
+la care determinam fiecare prim numar din interior, ce urma a fi evaluat cu
+cele ale fiecarui nod frate de pe fiecare nivel. Astfel, la fiecare citire si
+creare de nod frunza, stocam intr-un buffer string-ul ce urma a fi prelucrat. 
+La parcurgere in adancime, intorceam valoarea necesara de pe nodurile frunza- 
+primul numar de dinainte de virgula din string, si il comparam cu fiecare valoare
+a nodului-frate.
